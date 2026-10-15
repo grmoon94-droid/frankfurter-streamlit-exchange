@@ -1,10 +1,9 @@
+import requests
 import streamlit as st
 from dotenv import load_dotenv
-from langchain.chat_models import init_chat_model
-from langchain.agents import create_agent
 from langchain.tools import tool
-from langchain_tavily import TavilySearch
-import requests
+from langchain.agents import create_agent
+from langchain.chat_models import init_chat_model
 
 load_dotenv()
 
@@ -39,14 +38,6 @@ def get_exchange_rate(base: str = "USD", quote: str = "KRW", amount: float = 1.0
         f"환산: {amount:,.2f} {base} = {converted:,.2f} {quote}"
     )
 
-# @tool
-# def get_weather(location: str) -> str:
-#     """특정 지역의 날씨 정보 조회 도구"""
-#     return f"{location}의 날씨는 -5도에 미세먼지는 매우 나쁨"
-
-# tavily_tool = TavilySearch(max_results=5, topic="general")
-
-# agent = create_agent(model, tools=[get_weather, tavily_tool])
 
 agent = create_agent(
     model,
@@ -55,7 +46,7 @@ agent = create_agent(
 )
 
 
-st.title("1 페이지 입니다.")
+st.title("환율을 안내해 드립니다.")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
